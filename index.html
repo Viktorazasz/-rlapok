@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Űrlap</title>
+
+    <script>
+        function regisztracio() {
+            var email = document.getElementById("email").value;
+            var keresztnev = document.getElementById("keresztnev").value;
+            var vezeteknev = document.getElementById("vezeteknev").value;
+            var feltetelekElfogadva = document.getElementById("feltetelek").checked;
+
+            
+            if (!feltetelekElfogadva) {
+                alert("Kérjük, fogadja el a felhasználási feltételeket!");
+                return;
+            }
+
+            
+            var regisztracioAdatok = {
+                email: email,
+                keresztnev: keresztnev,
+                vezeteknev: vezeteknev
+            };
+            localStorage.setItem('regisztracioAdatok', JSON.stringify(regisztracioAdatok));
+
+            
+            alert("Sikeresen regisztráltál!");
+        }
+
+        window.onload = function() {
+            var regisztracioAdatok = localStorage.getItem('regisztracioAdatok');
+            if (regisztracioAdatok) {
+                var adatok = JSON.parse(regisztracioAdatok);
+                document.getElementById("email").value = adatok.email;
+                document.getElementById("keresztnev").value = adatok.keresztnev;
+                document.getElementById("vezeteknev").value = adatok.vezeteknev;
+            }
+        };
+    </script>
+
+</head>
+<body>
+
+    <div style="margin: auto;">
+        <h1>Regisztráció</h1>
+        <form>
+            <label for="email">E-mail cím:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+        
+            <label for="keresztnev">Keresztnév:</label><br>
+            <input type="text" id="keresztnev" name="keresztnev" required><br><br>
+        
+            <label for="vezeteknev">Vezetéknév:</label><br>
+            <input type="text" id="vezeteknev" name="vezeteknev" required><br><br>
+        
+            <input type="checkbox" id="feltetelek" name="feltetelek" checked required><br>
+            <label for="feltetelek">Elfogadom a <a href="feltételek.html" target="_blank">felhasználási feltételeket</a></label><br><br>
+            <input type="checkbox" id="feliratkozás" name="felirtakozas" checked required><br>
+            <label for="checkbox">feliratkozás</label><br><br>
+        
+            <input type="submit" value="Regisztráció">
+            </form>
+    </div>
+
+</body>
+</html>
